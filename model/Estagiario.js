@@ -59,10 +59,10 @@ class Estagiario {
     }
 
     async create() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "INSERT INTO estagiarios (id_estagiario,nome_estagiario,data_nascimento,telefone,email,id_empresa) VALUES (?,?,?,?,?,?);";
         try {
-            const [result] = await conexao.promise().execute(sql, [this._id_estagiario, this._nome_estagiario, this._data_nascimento, this._telefone, this._email, this._id_empresa]);
+            const [result] = await conexao.execute(sql, [this._id_estagiario, this._nome_estagiario, this._data_nascimento, this._telefone, this._email, this._id_empresa]);
             this._id_estagiario = result.insertId;
             return result.affectedRows > 0;
         } catch (error) {
@@ -73,10 +73,10 @@ class Estagiario {
     }
 
     async readAll() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "SELECT * FROM estagiarios ORDER BY id_estagiario;";
         try {
-            const [rows] = await conexao.promise().execute(sql);
+            const [rows] = await conexao.execute(sql);
             return rows;
         } catch (error) {
             console.error("Erro ao ler estagiarios: ", error);
@@ -85,10 +85,10 @@ class Estagiario {
     }
 
     async readById() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "SELECT id_estagiario,nome_estagiario,data_nascimento,telefone,email,id_empresa FROM estagiarios WHERE id_estagiario = ?";
         try {
-            const [rows] = await conexao.promise().execute(sql, [this._id_estagiario]);
+            const [rows] = await conexao.execute(sql, [this._id_estagiario]);
             return rows;
         } catch (error) {
             console.error("Erro ao ler estagiario: ", error);
@@ -97,10 +97,10 @@ class Estagiario {
     }
 
     async update() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "UPDATE estagiarios SET nome_estagiario = ?,data_nascimento = ?, telefone = ?, email = ? WHERE id_estagiario = ?;";
         try {
-            const [result] = await conexao.promise().execute(sql, [this._nome_estagiario, this._data_nascimento, this._telefone, this._email, this._id_estagiario]);
+            const [result] = await conexao.execute(sql, [this._nome_estagiario, this._data_nascimento, this._telefone, this._email, this._id_estagiario]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error("Erro ao atualizar estagiario: ", error);
@@ -109,10 +109,10 @@ class Estagiario {
     }
 
     async delete() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "DELETE FROM estagiarios WHERE id_estagiario = ?;";
         try {
-            const [result] = await conexao.promise().execute(sql, [this._id_estagiario]);
+            const [result] = await conexao.execute(sql, [this._id_estagiario]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error("Erro ao deletar estagiario: ", error);
@@ -121,10 +121,10 @@ class Estagiario {
     }
 
     async isEstagiario() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "SELECT COUNT(*) AS qtd FROM estagiarios WHERE nome_estagiario = ?;";
         try {
-            const [rows] = await conexao.promise().execute(sql, [this._nome_estagiario]);
+            const [rows] = await conexao.execute(sql, [this._nome_estagiario]);
             return rows[0].qtd > 0;
         } catch (error) {
             console.error("Erro ao verificar estagiario: ", error);

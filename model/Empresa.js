@@ -41,10 +41,10 @@ class Empresa {
     }
 
     async create() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "INSERT INTO empresas (id_cliente_empresa, nome_empresa, cnpj) VALUES (?,?,?);";
         try {
-            const [result] = await conexao.promise().execute(sql, [this._id_cliente_empresa, this._nome_empresa, this._cnpj]);
+            const [result] = await conexao.execute(sql, [this._id_cliente_empresa, this._nome_empresa, this._cnpj]);
             this._id_empresa = result.insertId;
             return result.affectedRows > 0;
         } catch (error) {
@@ -54,10 +54,10 @@ class Empresa {
     }
 
     async readAll() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "SELECT * FROM empresas ORDER BY id_empresa;";
         try {
-            const [rows] = await conexao.promise(sql);
+            const [rows] = await conexao.execute(sql);
             return rows;
         } catch (error) {
             console.error("Erro ao ler empresas: ", error);
@@ -66,22 +66,23 @@ class Empresa {
     }
 
     async readById() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "SELECT id_empresa, id_cliente_empresa, nome_empresa, cnpj FROM empresas WHERE id_empresa = ?;";
         try {
-            const [rows] = await conexao.promise().execute(sql, [this._id_empresa]);
+            const [rows] = await conexao.execute(sql, [this._id_empresa]);
+            console.log(rows);
             return rows;
         } catch (error) {
             console.error("Erro ao ler empresa: ", error);
-            return null;
+            return false;
         }
     }
 
     async update() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "UPDATE empresas SET nome_empresa = ?, cnpj = ? WHERE id_empresa = ?;";
         try {
-            const [result] = await conexao.promise().execute(sql, [this._nome_empresa, this._id_empresa]);
+            const [result] = await conexao.execute(sql, [this._nome_empresa, this._cnpj, this._id_empresa]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error("Erro ao atualizar empresa: ", error);
@@ -91,10 +92,10 @@ class Empresa {
     }
 
     async delete() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "DELETE FROM empresas WHERE id_empresa = ?;";
         try { 
-            const [result] = await conexao.promise().execute(sql, [this._id_empresa]);
+            const [result] = await conexao.execute(sql, [this._id_empresa]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error("Erro ao deletar empresa: ", error);
@@ -103,10 +104,10 @@ class Empresa {
     }
 
     async isEmpresa() {
-        const conexao = Banco.getConexao();
+        const conexao = await Banco.getConexao();
         const sql = "SELECT COUNT(*) AS qtd FROM empresas WHERE nome_empresa = ?;";
         try { 
-            const [rows] = await conexao.promise().execute(sql, [this._nome_empresa]);
+            const [rows] = await conexao.execute(sql, [this._nome_empresa]);
             return rows[0].qtd > 0;
         } catch (error) {
             console.error("Erro ao verificar empresa: ", error);
