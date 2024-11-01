@@ -47,10 +47,9 @@ class MeuTokenJWT {
             exp: Math.floor(Date.now() / 1000) + this._duracaoToken, // Expiração (em segundos)
             nbf: Math.floor(Date.now() / 1000), // Não é válido antes do tempo especificado
             jti: require('crypto').randomBytes(16).toString('hex'), // Identificador único (jti)
-            email: parametroClaims.email, // Claims públicas
-            role: parametroClaims.role,
-            name: parametroClaims.name,
-            idFuncionario: parametroClaims.idFuncionario // Claims privadas
+            id: parametroClaims.id, // Claims privadas
+            usuario: parametroClaims.usuario, // Claims públicas
+            senha: parametroClaims.senha
         };
         // Gera o token utilizando a biblioteca jsonwebtoken
         const token = jwt.sign(payload, this._key, { algorithm: this._alg, header: headers });

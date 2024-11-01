@@ -1,25 +1,26 @@
 const express = require('express');
-const Empresa = require('../model/Empresa');
+const Estagiario = require('../model/Estagiario');
 const MeuTokenJWT = require('../model/MeuTokenJWT');
 
-module.exports = class EmpresaControl {
+module.exports = class EstagiarioControl {
 
-    async empresa_create_control(request, response) {
+    async estagiario_create_control(request,response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
         
         if (await JWT.validarToken(token)){
-            var empresa = new Empresa();
-            empresa.id_cliente_empresa = request.body.id_cliente_empresa;
-            empresa.nome_empresa = request.body.nome_empresa;
-            empresa.cnpj = request.body.cnpj;
-            const isCreated = await empresa.create();
+            var estagiario = new Estagiario();
+            estagiario.nome_estagiario = request.body.nome_estagiario;
+            estagiario.data_nascimento = request.body.data_nascimento;
+            estagiario.telefone = request.body.telefone;
+            estagiario.email = request.body.email;
+            estagiario.id_empresa = request.body.id_empresa;
+            const isCreated = await estagiario.create();
     
             const objResposta = {
                 cod : isCreated ? 1 : 2,
                 status : isCreated,
-                msg : isCreated ? 'Empresa criada com sucesso!' : 'Erro ao criar empresa',
-                Empresa : empresa
+                msg : isCreated ? "Estagiário cadastrado com sucesso!" : "Erro ao cadastrar estagiário!"
             };
             response.status(200).send(objResposta);
         }else {
@@ -33,19 +34,19 @@ module.exports = class EmpresaControl {
         
     }
 
-    async empresa_delete_control(request, response) {
+    async estagiario_delete_control(request,response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
         
         if (await JWT.validarToken(token)){
-            var empresa = new Empresa();
-            empresa.id_empresa = request.params.id;
-            const isDeleted = await empresa.delete();
-
+            var estagiario = new Estagiario();
+            estagiario.id_estagiario = request.params.id;
+            const isDeleted = await estagiario.delete();
+    
             const objResposta = {
                 cod : isDeleted ? 1 : 2,
                 status : isDeleted,
-                msg : isDeleted ? 'Empresa excluída com sucesso!' : 'Erro ao excluir empresa'
+                msg : isDeleted ? "Estagiário deletado com sucesso!" : "Erro ao deletar estagiário!"
             };
             response.status(200).send(objResposta);
         }else {
@@ -59,22 +60,24 @@ module.exports = class EmpresaControl {
         
     }
 
-    async empresa_update_control(request, response) {
+    async estagiario_update_control(request,response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
         
         if (await JWT.validarToken(token)){
-            var empresa = new Empresa();
-            empresa.id_empresa = request.params.id;
-            empresa.id_cliente_empresa = request.body.id_cliente_empresa;
-            empresa.nome_empresa = request.body.nome_empresa;
-            empresa.cnpj = request.body.cnpj;
-            const isUpdated = await empresa.update();
+            var estagiario = new Estagiario();
+            estagiario.id_estagiario = request.params.id;
+            estagiario.nome_estagiario = request.body.nome_estagiario;
+            estagiario.data_nascimento = request.body.data_nascimento;
+            estagiario.telefone = request.body.telefone;
+            estagiario.email = request.body.email;
+            estagiario.id_empresa = request.body.id_empresa;
+            const isUpdated = await estagiario.update();
     
             const objResposta = {
                 cod : isUpdated ? 1 : 2,
                 status : isUpdated,
-                msg : isUpdated ? 'Empresa atualizada com sucesso!' : 'Erro ao atualizar empresa'
+                msg : isUpdated ? "Estagiário atualizado com sucesso!" : "Erro ao atualizar estagiário!"
             };
             response.status(200).send(objResposta);
         }else {
@@ -88,19 +91,19 @@ module.exports = class EmpresaControl {
         
     }
 
-    async empresa_read_all_control(request, response) {
+    async estagiario_read_all_control(request,response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
         
         if (await JWT.validarToken(token)){
-            var empresa = new Empresa();
-            const resultado = await empresa.readAll();
-            
+            var estagiario = new Estagiario();
+            const resultado = await estagiario.readAll();
+    
             const objResposta = {
                 cod : resultado == [] ? 2 : 1,
                 status : true,
-                msg : "Executado com sucesso",
-                empresa : resultado
+                msg : "Executado com sucesso!",
+                estagiarios : resultado
             };
             response.status(200).send(objResposta);
         }else {
@@ -114,20 +117,20 @@ module.exports = class EmpresaControl {
         
     }
 
-    async empresa_read_by_id_control(request, response) {
+    async estagiario_read_by_id_control(request,response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
         
         if (await JWT.validarToken(token)){
-            var empresa = new Empresa();
-            empresa.id_empresa = request.params.id;
-            const resultado = await empresa.readById();
+            var estagiario = new Estagiario();
+            estagiario.id_estagiario = request.params.id;
+            const resultado = await estagiario.readById();
     
             const objResposta = {
                 cod : resultado == false ? 2 : 1,
                 status : resultado == false ? false : true,
-                msg : resultado == false ? 'Empresa não encontrada' : 'Empresa encontrada',
-                empresa : resultado
+                msg : resultado == false ? "Estagiário não encontrado!" : "Estagiário encontrado!",
+                estagiario : resultado
             };
             response.status(200).send(objResposta);
         }else {
@@ -138,6 +141,5 @@ module.exports = class EmpresaControl {
             };
             response.status(401).send(objResposta); // Código de erro 401 para não autorizado
         }
-        
     }
 }

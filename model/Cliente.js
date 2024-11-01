@@ -33,9 +33,9 @@ class Cliente {
 
     async create() {
         const conexao = await Banco.getConexao();
-        const sql = "INSERT INTO clientes (id_cliente, nome_cliente, pedido_cliente) VALUES (?,?,?);";
+        const sql = "INSERT INTO clientes (nome_cliente, pedido_cliente) VALUES (?,?);";
         try {
-            const [result] = await conexao.execute(sql, [this._id_cliente, this._nome_cliente, this._pedido_cliente]);
+            const [result] = await conexao.execute(sql, [this._nome_cliente, this._pedido_cliente]);
             this._id_cliente = result.insertId;
             return result.affectedRows > 0;
         } catch (error) {
