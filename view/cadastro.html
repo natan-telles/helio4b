@@ -121,7 +121,6 @@
         <input class="button" type="submit" name="submit" value="Cadastrar-se" onclick="cadastrar_usuario()">
     </form>
 
-    <!--
     <script>
         function cadastrar_usuario() {
             event.preventDefault()
@@ -132,7 +131,7 @@
             }
 
             if (document.getElementById("senha").value == document.getElementById("confirmar_senha").value) {
-                let uri = "/cadastro"
+                let uri = "http://localhost:2007/login"
                 fetch(uri, {
                     method: "POST",
                     headers: {
@@ -147,7 +146,6 @@
                     if (textoJson.status) {
                         alert("Cadastro realizado com sucesso!");
                         window.location.href = "login.html"
-                        localStorage.setItem('token', JSON.stringify(textoJson.token))
                     } else {
                         alert("Erro ao cadastrar!");
                     }
@@ -157,12 +155,8 @@
             }else{
                 alert("Digite a mesma senha nos dois campos!")
             }
-
-
-
         }
     </script>
--->
 </body>
 
 </html>

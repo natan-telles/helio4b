@@ -1,13 +1,13 @@
 const express = require('express');
 const EmpresaControl = require('../controller/EmpresaControl');
-//const EmpresaMiddleware = require('../middleware/EmpresaMiddleware');
+const EmpresaMiddleware = require('../middleware/EmpresaMiddleware');
 
 module.exports = class EmpresaRouter {
     constructor() {
         this._router = express.Router();
         this._empresaControl = new EmpresaControl();
-        //this._clienteMiddleware = new ClienteMiddleware();
-    }
+        this._empresaMiddleware = new EmpresaMiddleware();
+       }
 
     criarRotasEmpresa() {
         this._router.get('/',
@@ -21,10 +21,10 @@ module.exports = class EmpresaRouter {
         );
 
         this._router.post('/',
-            //fazer verificacao usando middleware *quantas forem necessarias
-            //this._clienteMiddleware.
-
             //chamar funcao create
+            this._empresaMiddleware.validar_nome_empresa,
+            this._empresaMiddleware.validar_cnpj_empresa,
+            this._empresaMiddleware.existe_empresa_cadastrada,
             this._empresaControl.empresa_create_control
         );
 
@@ -35,6 +35,8 @@ module.exports = class EmpresaRouter {
 
         this._router.put('/:id',
             //chamar funcao update
+            this._empresaMiddleware.validar_nome_empresa,
+            this._empresaMiddleware.validar_cnpj_empresa,
             this._empresaControl.empresa_update_control
         );
 

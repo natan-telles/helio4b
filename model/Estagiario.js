@@ -74,7 +74,7 @@ class Estagiario {
 
     async readAll() {
         const conexao = await Banco.getConexao();
-        const sql = "SELECT * FROM estagiarios ORDER BY id_estagiario;";
+        const sql = "SELECT id_estagiario, nome_estagiario, DATE_FORMAT(data_nascimento, '%Y-%m-%d') AS data_nascimento, telefone, email, id_empresa FROM estagiarios;";
         try {
             const [rows] = await conexao.execute(sql);
             return rows;
@@ -86,7 +86,7 @@ class Estagiario {
 
     async readById() {
         const conexao = await Banco.getConexao();
-        const sql = "SELECT id_estagiario,nome_estagiario,data_nascimento,telefone,email,id_empresa FROM estagiarios WHERE id_estagiario = ?";
+        const sql = "SELECT id_estagiario, nome_estagiario, DATE_FORMAT(data_nascimento, '%Y-%m-%d') AS data_nascimento, telefone, email, id_empresa FROM estagiarios WHERE id_estagiario = ?;";
         try {
             const [rows] = await conexao.execute(sql, [this._id_estagiario]);
             return rows;

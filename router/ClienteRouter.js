@@ -1,10 +1,12 @@
 const express = require('express');
 const ClienteControl = require('../controller/ClienteControl');
+const ClienteMiddleware = require('../middleware/ClienteMiddleware')
 
 module.exports = class ClienteRouter {
     constructor() {
         this._router = express.Router();
         this._clienteControl = new ClienteControl();
+        this._clienteMiddleware = new ClienteMiddleware();
     }
 
     criarRotasCliente() {
@@ -21,6 +23,9 @@ module.exports = class ClienteRouter {
         this._router.post('/',
             //fazer verificacao usando middleware *quantas forem necessarias
             //chamar funcao create
+            this._clienteMiddleware.validar_NomeCliente,
+            this._clienteMiddleware.validar_pedido_cliente,
+            this._clienteMiddleware.existe_NomeCliente_cadastrado,
             this._clienteControl.cliente_create_control
         );
 
@@ -31,6 +36,8 @@ module.exports = class ClienteRouter {
 
         this._router.put('/:id',
             //chamar funcao update
+            this._clienteMiddleware.validar_NomeCliente,
+            this._clienteMiddleware.validar_pedido_cliente,
             this._clienteControl.cliente_update_control
         );
 

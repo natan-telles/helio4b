@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const LogarRouter = require('./router/LogarRouter')
 const LoginRouter = require('./router/LoginRouter');
 const ClienteRouter = require('./router/ClienteRouter');
@@ -7,6 +8,7 @@ const EstagiarioRouter = require('./router/EstagiarioRouter')
 const app = express();
 const porta = 2007;
 
+app.use(cors());
 app.use(express.json());
 const logarRoteador = new LogarRouter();
 const loginRoteador = new LoginRouter();

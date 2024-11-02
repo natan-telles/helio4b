@@ -105,9 +105,9 @@ class Empresa {
 
     async isEmpresa() {
         const conexao = await Banco.getConexao();
-        const sql = "SELECT COUNT(*) AS qtd FROM empresas WHERE nome_empresa = ?;";
+        const sql = "SELECT COUNT(*) AS qtd FROM empresas WHERE nome_empresa = ? or cnpj = ?;";
         try { 
-            const [rows] = await conexao.execute(sql, [this._nome_empresa]);
+            const [rows] = await conexao.execute(sql, [this._nome_empresa,this._cnpj]);
             return rows[0].qtd > 0;
         } catch (error) {
             console.error("Erro ao verificar empresa: ", error);
