@@ -143,11 +143,11 @@
                 return response.json();
             })
             .then(textoJson => {
-                console.log(textoJson);
+                //console.log(textoJson);
                 if (textoJson.status) {
                     alert("Login realizado com sucesso!");
                     window.location.href = "home.html";
-                    console.log(textoJson.token);
+                    //console.log(textoJson.token);
                     localStorage.setItem('token', textoJson.token.trim());
                 } else {
                     document.getElementById("resposta").textContent = "Credenciais inválidas!";

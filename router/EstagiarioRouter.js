@@ -37,7 +37,6 @@ module.exports = class EstagiarioRouter {
             this._estagiarioMiddleware.validar_data_nascimento,
             this._estagiarioMiddleware.validar_telefone,
             this._estagiarioMiddleware.validar_email,
-            this._estagiarioMiddleware.validar_id_empresa,
             this._estagiarioControl.estagiario_update_control
         );
 

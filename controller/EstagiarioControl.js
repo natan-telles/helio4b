@@ -71,7 +71,6 @@ module.exports = class EstagiarioControl {
             estagiario.data_nascimento = request.body.data_nascimento;
             estagiario.telefone = request.body.telefone;
             estagiario.email = request.body.email;
-            estagiario.id_empresa = request.body.id_empresa;
             const isUpdated = await estagiario.update();
     
             const objResposta = {

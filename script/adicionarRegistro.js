@@ -26,14 +26,14 @@ function adicionarCliente() {
     console.log("Pedido: ", pedido);
 
     let novo_cliente = {
-        novoCliente: nome,
-        pedidoCliente: pedido
+        nome_cliente: nome,
+        pedido_cliente: pedido
     };
 
     //console.log("Dados do cliente: ", novo_cliente);
 
     // Fetch -> inserindo no banco
-    let uri = "/clientes";
+    let uri = "http://localhost:2007/clientes/";
     let token = localStorage.getItem('token')
     //console.log("Token do localStorage: " + token.trim())
     fetch(uri, {
@@ -63,7 +63,7 @@ function adicionarEstagiario() {
 
 
     let estagiario = {
-        novo_estagiario: nome,
+        nome_estagiario: nome,
         data_nascimento: nascimento,
         telefone: telefone,
         email: email,
@@ -74,7 +74,7 @@ function adicionarEstagiario() {
     //console.log("Dados do estagiario: ", novo_estagiario);
 
     // Fetch -> inserindo no banco
-    let uri = "/estagiarios";
+    let uri = "http://localhost:2007/estagiarios";
     let token = localStorage.getItem('token')
     //console.log("Token do localStorage: " + token.trim())
     fetch(uri, {
@@ -101,16 +101,16 @@ function adicionarEmpresa() {
     let idClienteEmpresa = document.getElementById("id_cliente_empresa").value;
 
     let empresa = {
-        novaEmpresa: nome,
-        cnpjEmpresa: cnpj,
-        idClienteEmpresa: parseInt(idClienteEmpresa)
+        id_cliente_empresa: parseInt(idClienteEmpresa),
+        nome_empresa: nome,
+        cnpj: cnpj
     }
     console.log(empresa)
 
     //console.log("Dados do estagiario: ", empresa);
 
     // Fetch -> inserindo no banco
-    let uri = "/empresas";
+    let uri = "http://localhost:2007/empresas";
     let token = localStorage.getItem('token')
     //console.log("Token do localStorage: " + token.trim())
     fetch(uri, {

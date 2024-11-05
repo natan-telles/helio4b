@@ -7,7 +7,7 @@ module.exports = class ClienteControl {
     async cliente_create_control(request, response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
-        
+
         if (await JWT.validarToken(token)) {
             const cliente = new Cliente();
             cliente.nome_cliente = request.body.nome_cliente;
@@ -22,7 +22,7 @@ module.exports = class ClienteControl {
             }
 
             const isCreated = await cliente.create();
-    
+
             if (isCreated) {
                 const objResposta = {
                     cod: 1,
@@ -47,24 +47,24 @@ module.exports = class ClienteControl {
             response.status(401).send(objResposta); // Código de erro 401 para não autorizado
         }
     }
-    
+
 
     async cliente_delete_control(request, response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
-        
-        if (await JWT.validarToken(token)){
+
+        if (await JWT.validarToken(token)) {
             var cliente = new Cliente();
             cliente.id_cliente = request.params.id;
             const isDeleted = await cliente.delete();
-    
+
             const objResposta = {
-                cod : isDeleted ? 1 : 2,
-                status : isDeleted,
-                msg : isDeleted ? 'Cliente excluído com sucesso!' : 'Erro ao excluir cliente'
+                cod: isDeleted ? 1 : 2,
+                status: isDeleted,
+                msg: isDeleted ? 'Cliente excluído com sucesso!' : 'Erro ao excluir cliente'
             };
             response.status(200).send(objResposta);
-        }else{
+        } else {
             const objResposta = {
                 cod: 3,
                 status: false,
@@ -72,27 +72,27 @@ module.exports = class ClienteControl {
             };
             response.status(401).send(objResposta); // Código de erro 401 para não autorizado
         }
-        
+
     }
 
     async cliente_update_control(request, response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
-        
-        if (await JWT.validarToken(token)){
+
+        if (await JWT.validarToken(token)) {
             var cliente = new Cliente();
             cliente.id_cliente = request.params.id;
             cliente.nome_cliente = request.body.nome_cliente;
             cliente.pedido_cliente = request.body.pedido_cliente;
             const isUpdated = await cliente.update();
-    
+
             const objResposta = {
-                cod : isUpdated ? 1 : 2,
-                status : isUpdated,
-                msg : isUpdated ? 'Cliente atualizado com sucesso!' : 'Erro ao atualizar cliente'
+                cod: isUpdated ? 1 : 2,
+                status: isUpdated,
+                msg: isUpdated ? 'Cliente atualizado com sucesso!' : 'Erro ao atualizar cliente'
             };
             response.status(200).send(objResposta);
-        }else{
+        } else {
             const objResposta = {
                 cod: 3,
                 status: false,
@@ -100,9 +100,9 @@ module.exports = class ClienteControl {
             };
             response.status(401).send(objResposta); // Código de erro 401 para não autorizado
         }
-        
-    }
 
+    }
+    
     async cliente_read_all_control(request, response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
@@ -125,33 +125,32 @@ module.exports = class ClienteControl {
                 msg: 'Token inválido!'
             };
             response.status(401).send(objResposta); // Código de erro 401 para não autorizado
-        }
-        
+        } 
     }
 
     async cliente_read_by_id_control(request, response) {
         const token = request.headers['authorization'];
         const JWT = new MeuTokenJWT();
-        
-        if (await JWT.validarToken(token)){
+
+        if (await JWT.validarToken(token)) {
             var cliente = new Cliente();
             cliente.id_cliente = request.params.id;
             const resultado = await cliente.readById();
-    
+
             const objResposta = {
-                cod : resultado == null ? 2 : 1,
-                status : true,
-                msg : resultado ? 'Cliente encontrado' : 'Cliente não encontrado',
-                cliente : resultado
+                cod: resultado == null ? 2 : 1,
+                status: true,
+                msg: resultado ? 'Cliente encontrado' : 'Cliente não encontrado',
+                cliente: resultado
             };
             response.status(200).send(objResposta);
-        }else{
+        } else {
             const objResposta = {
                 cod: 3,
                 status: false,
                 msg: 'Token inválido!'
             };
             response.status(401).send(objResposta); // Código de erro 401 para não autorizado
-        } 
+        }
     }
 }

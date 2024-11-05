@@ -21,12 +21,13 @@ function alterarRegistro(id) {
 
 
     let tabela = document.getElementById("select").value
+    let uri = "http://localhost:2007"
     if (tabela == "clientes") {
-        uri = `/clientes/${id}`
+        uri += `/clientes/${id}`
     } else if (tabela == "estagiarios") {
-        uri = `/estagiarios/${id}`
+        uri += `/estagiarios/${id}`
     } else if (tabela == "empresas") {
-        uri = `/empresas/${id}`
+        uri += `/empresas/${id}`
     }
 
     function alterarCliente() {
@@ -36,8 +37,8 @@ function alterarRegistro(id) {
         console.log("Pedido: ", pedido);
 
         let alterar_cliente = {
-            nomeCliente: nome,
-            pedidoCliente: pedido
+            nome_cliente: nome,
+            pedido_cliente: pedido
         };
 
         console.log(alterar_cliente)
@@ -83,6 +84,7 @@ function alterarRegistro(id) {
 
         console.log(alterar_estagiario)
         let token = localStorage.getItem('token')
+        //console.log(uri)
         fetch(uri, {
             method: "PUT",
             headers: {

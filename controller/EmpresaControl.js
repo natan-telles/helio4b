@@ -100,7 +100,7 @@ module.exports = class EmpresaControl {
                 cod : resultado == [] ? 2 : 1,
                 status : true,
                 msg : "Executado com sucesso",
-                empresa : resultado
+                empresas : resultado
             };
             response.status(200).send(objResposta);
         }else {

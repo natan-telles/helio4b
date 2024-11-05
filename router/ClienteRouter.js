@@ -12,7 +12,7 @@ module.exports = class ClienteRouter {
     criarRotasCliente() {
         this._router.get('/',
             //chamar funcao readAll()
-            this._clienteControl.cliente_read_all_control
+            this._clienteControl.cliente_read_all_control,
         );
 
         this._router.get('/:id',

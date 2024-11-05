@@ -16,13 +16,13 @@ function excluirRegistro(tr, id) {
 
     // Define a URI com base na tabela atual
     let tabela = document.getElementById("select").value;
-    let uri;
+    let uri = "http://localhost:2007";
     if (tabela === "clientes") {
-        uri = `/clientes/${id}`;
+        uri += `/clientes/${id}`;
     } else if (tabela === "estagiarios") {
-        uri = `/estagiarios/${id}`;
+        uri += `/estagiarios/${id}`;
     } else if (tabela === "empresas") {
-        uri = `/empresas/${id}`;
+        uri += `/empresas/${id}`;
     } else {
         console.error("Tabela não reconhecida.");
         return;
